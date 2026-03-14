@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+  <title>Forest Planner</title>
+  <meta name="theme-color" content="#be123c" />
+  <link rel="manifest" href="/public/manifest.json" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="topbar__left">
+        <div class="brand">Forest Planner</div>
+        <div class="topbar__title" id="screenTitle">Профиль</div>
+      </div>
+
+      <div class="topbar__right">
+        <button
+          class="theme-toggle"
+          id="themeToggle"
+          type="button"
+          aria-label="Переключить тему"
+          title="Переключить тему"
+        >
+          <span id="themeToggleIcon">🌙</span>
+        </button>
+        <div class="topbar__date" id="topDate"></div>
+      </div>
+    </header>
+
+    <div class="toast" id="toast">Сохранено</div>
+
+    <main class="screens">
+      <!-- PROFILE -->
+      <section class="screen screen--active" id="screen-profile" data-title="Профиль">
+        <div class="card center">
+          <div class="avatar-wrap">
+            <img
+              id="avatarImg"
+              class="avatar"
+              alt="Аватар"
+              src="https://placehold.co/96x96/png?text=%F0%9F%91%A4"
+            />
+          </div>
+
+          <input id="avatarInput" type="file" accept="image/*" hidden />
+          <button class="btn btn--outline" id="btnChangePhoto" type="button">
+            Изменить фото
+          </button>
+
+          <h2 class="h2" id="profileNameTitle">Иван Петров</h2>
+
+          <label class="label" for="profileName">ИМЯ</label>
+          <input class="input" id="profileName" placeholder="Ваше имя" />
+
+          <label class="label" for="profileAbout">О СЕБЕ</label>
+          <textarea
+            class="textarea"
+            id="profileAbout"
+            placeholder="Напишите пару слов..."
+          ></textarea>
+
+          <label class="label" for="profileDob">ДЕНЬ РОЖДЕНИЯ</label>
+          <input class="input" id="profileDob" type="date" />
+
+          <button class="btn btn--primary spaced w-full" id="btnSaveProfile" type="button">
+            Сохранить
+          </button>
+        </div>
+      </section>
+
+      <!-- NOTES -->
+      <section class="screen" id="screen-notes" data-title="Заметки">
+        <div class="card notes-form-card">
+          <input class="input" id="noteTitle" placeholder="Заголовок" />
+          <textarea
+            class="textarea textarea--notes"
+            id="noteText"
+            placeholder="Каждая строка = отдельный пункт списка"
+          ></textarea>
+
+          <button class="btn btn--primary spaced w-full" id="btnAddNote" type="button">
+            Добавить заметку
+          </button>
+        </div>
+
+        <div class="list notes-list" id="notesList"></div>
+      </section>
+
+      <!-- HABITS -->
+      <section class="screen" id="screen-habits" data-title="Привычки">
+        <div class="section-head section-head--wrap">
+          <div>
+            <div class="h2 m0">Выбранный день</div>
+            <div class="muted" id="habitsDate"></div>
+          </div>
+          <input class="input input--date-small" id="habitsDayPicker" type="date" />
+        </div>
+
+        <div class="habit">
+          <div class="habit__top">
+            <div class="habit__name">💧 Вода</div>
+            <div class="habit__value" id="val-water">0 л</div>
+          </div>
+          <div class="habit__row">
+            <input class="input" id="inp-water" placeholder="0.5 л" inputmode="decimal" />
+            <button class="btn btn--plus" data-add="water" type="button">+</button>
+          </div>
+        </div>
+
+        <div class="habit">
+          <div class="habit__top">
+            <div class="habit__name">🏃 Спорт</div>
+            <div class="habit__value" id="val-sport">0 мин</div>
+          </div>
+          <div class="habit__row">
+            <input class="input" id="inp-sport" placeholder="15 мин" inputmode="numeric" />
+            <button class="btn btn--plus" data-add="sport" type="button">+</button>
+          </div>
+        </div>
+
+        <div class="habit">
+          <div class="habit__top">
+            <div class="habit__name">📚 Чтение</div>
+            <div class="habit__value" id="val-reading">0 мин</div>
+          </div>
+          <div class="habit__row">
+            <input class="input" id="inp-reading" placeholder="30 мин" inputmode="numeric" />
+            <button class="btn btn--plus" data-add="reading" type="button">+</button>
+          </div>
+        </div>
+
+        <div class="habit">
+          <div class="habit__top">
+            <div class="habit__name">😴 Сон</div>
+            <div class="habit__value" id="val-sleep">0 ч</div>
+          </div>
+          <div class="habit__row">
+            <input class="input" id="inp-sleep" placeholder="8 ч" inputmode="decimal" />
+            <button class="btn btn--plus" data-add="sleep" type="button">+</button>
+          </div>
+        </div>
+
+        <div class="habit">
+          <div class="habit__top">
+            <div class="habit__name">🚶 Прогулка</div>
+            <div class="habit__value" id="val-walk">0 мин</div>
+          </div>
+          <div class="habit__row">
+            <input class="input" id="inp-walk" placeholder="40 мин" inputmode="numeric" />
+            <button class="btn btn--plus" data-add="walk" type="button">+</button>
+          </div>
+        </div>
+
+        <button class="btn btn--primary big spaced" id="btnSaveProgress" type="button">
+          Сохранить прогресс
+        </button>
+      </section>
+
+      <!-- STATS -->
+      <section class="screen" id="screen-stats" data-title="Статистика">
+        <div class="stats-grid" id="statsGrid"></div>
+
+        <div class="card">
+          <div class="section-head section-head--wrap">
+            <div>
+              <div class="h2 m0">Выбранный день</div>
+              <div class="muted">Можно смотреть любую дату</div>
+            </div>
+            <input class="input input--date-small" id="statsDatePicker" type="date" />
+          </div>
+
+          <div class="weekday" id="weekdayRow"></div>
+        </div>
+
+        <div class="card">
+          <div class="section-head section-head--wrap">
+            <div>
+              <div class="h3 m0">Прогресс за период</div>
+              <div class="muted">Визуализация привычек</div>
+            </div>
+
+            <select class="input input--select-small" id="periodSelect">
+              <option value="7">7 дней</option>
+              <option value="14">14 дней</option>
+              <option value="30">30 дней</option>
+            </select>
+          </div>
+
+          <div class="progress-list" id="progressList"></div>
+        </div>
+
+        <div class="card">
+          <div class="h3" id="dayNotesTitle">Заметки за день</div>
+          <div class="day-notes" id="dayNotesList"></div>
+
+          <textarea
+            class="textarea"
+            id="dayNoteText"
+            placeholder="Новая заметка за этот день..."
+          ></textarea>
+          <button class="btn btn--primary spaced w-full" id="btnAddDayNote" type="button">
+            Добавить заметку
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item nav-item--active" data-go="profile" type="button">
+        <div class="nav-ico">👤</div>
+        <div class="nav-txt">Профиль</div>
+      </button>
+      <button class="nav-item" data-go="notes" type="button">
+        <div class="nav-ico">📝</div>
+        <div class="nav-txt">Заметки</div>
+      </button>
+      <button class="nav-item" data-go="habits" type="button">
+        <div class="nav-ico">🎯</div>
+        <div class="nav-txt">Привычки</div>
+      </button>
+      <button class="nav-item" data-go="stats" type="button">
+        <div class="nav-ico">📊</div>
+        <div class="nav-txt">Статистика</div>
+      </button>
+    </nav>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
